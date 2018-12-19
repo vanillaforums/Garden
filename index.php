@@ -19,6 +19,8 @@ ob_start();
 require_once(__DIR__.'/environment.php');
 
 // Require the bootstrap to configure the application.
+require_once(__DIR__.'/staticRouter.php');
+
 require_once(__DIR__.'/bootstrap.php');
 
 // Create and configure the dispatcher.
