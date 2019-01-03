@@ -1,0 +1,14 @@
+kb-index:
+    path:     /api/v2/knowledge-bases/
+    defaults: { _controller: \Vanilla\Knowledge\Controllers\Api\KnowledgeBasesApiController,
+                action: index}
+kb-get:
+    path:     /api/v2/knowledge-bases/{id}
+    defaults: { _controller: \Vanilla\Knowledge\Controllers\Api\KnowledgeBasesApiController,
+                action: get,
+                id: null}
+
+
+route2:
+    path:     /foo/bar
+    defaults: { _controller: 'MyController::foobarAction' }
