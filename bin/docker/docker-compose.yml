@@ -1,0 +1,120 @@
+version: "3.5"
+
+services:
+    nginx:
+        build:
+            context: "./images/nginx"
+        # Transform the template into an actual file
+        command: /bin/bash -c "envsubst < /etc/nginx/fastcgi.conf.tpl > /etc/nginx/fastcgi.conf && nginx -g 'daemon off;'"
+        container_name: "nginx"
+        depends_on:
+            - "php-fpm"
+        environment:
+            - "DOLLAR=$$"
+            - "FASTCGI_SPLIT_PATH_INFO=${VANILLA_DOCKER_FASTCGI_SPLIT_PATH_INFO}"
+            - "FASTCGI_INTERCEPT_ERRORS=${VANILLA_DOCKER_FASTCGI_INTERCEPT_ERRORS}"
+            - "FASTCGI_IGNORE_CLIENT_ABORT=${VANILLA_DOCKER_FASTCGI_IGNORE_CLIENT_ABORT}"
+            - "FASTCGI_CONNECT_TIMEOUT=${VANILLA_DOCKER_FASTCGI_CONNECT_TIMEOUT}"
+            - "FASTCGI_SEND_TIMEOUT=${VANILLA_DOCKER_FASTCGI_SEND_TIMEOUT}"
+            - "FASTCGI_READ_TIMEOUT=${VANILLA_DOCKER_FASTCGI_READ_TIMEOUT}"
+            - "FASTCGI_BUFFER_SIZE=${VANILLA_DOCKER_FASTCGI_BUFFER_SIZE}"
+            - "FASTCGI_BUFFERS=${VANILLA_DOCKER_FASTCGI_BUFFERS}"
+            - "FASTCGI_BUSY_BUFFERS_SIZE=${VANILLA_DOCKER_FASTCGI_BUSY_BUFFERS_SIZE}"
+            - "FASTCGI_TEMP_FILE_WRITE_SIZE=${VANILLA_DOCKER_FASTCGI_TEMP_FILE_WRITE_SIZE}"
+        networks:
+            vanilla_network:
+                aliases: # Allows (sso|dev).vanilla.localhost to be resolved internally from php-fpm
+                    - "sso.vanilla.localhost"
+                    - "dev.vanilla.localhost"
+                    - "vanilla.test"
+        ports:
+            - "80:80"
+            - "8080:8080"
+            - "443:443"
+        volumes:
+            - "shared:/shared" # allow to use the php-fpm socket
+            - "./logs/nginx:/var/log/nginx:delegated"
+            - "./certificates:/certificates:cached"
+            - "../../../:/srv/vanilla-repositories:cached"
+
+    # Don't forget to update docker-compose.unit-test.yml
+    php-fpm:
+        build:
+            context: "./images/php-fpm"
+        container_name: "php-fpm"
+        environment:
+            - "PHP_INI_SCAN_DIR=:/usr/local/etc/php/custom.conf.d" # Allow users to override configs
+            - "TEST_BASEURL"
+            - "TEST_DB_HOST"
+            - "TEST_DB_NAME"
+            - "TEST_DB_USER"
+            - "TEST_DB_PASSWORD"
+        networks:
+            - "vanilla_network"
+        volumes:
+            - "shared:/shared" # expose php-fpm socket
+            - "./logs/php-fpm:/var/log/php-fpm:delegated"
+            - "./resources/certificates:/usr/local/share/ca-certificates:cached" # Mount extra certificates
+            - "./resources/sphinx:/sphinx:cached" # expose sphinx API. We have to do this here because we need to be enable to update the plugin before we can start the container.
+            - "./resources/usr/local/etc/php/conf.d:/usr/local/etc/php/custom.conf.d:cached"
+            - "../../../:/srv/vanilla-repositories"
+        depends_on:
+            - "database"
+
+    database:
+        build:
+            context: "./images/${VANILLA_DOCKER_DATABASE}"
+        container_name: "database"
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        networks:
+            - "vanilla_network"
+        ports:
+            - "3306:3306"
+        volumes:
+            - "./logs/${VANILLA_DOCKER_DATABASE}:/var/log/mysql"
+            - "./resources/etc/mysql/conf.d/:/etc/mysql/conf.d/"
+            - "datastorage:/var/lib/mysql"
+    #####
+    ## Runs on the default port 11211
+    ##
+    ## Put the following in conf/bootstrap.early.php
+#    // Cache
+#    saveToConfig('Cache.Enabled', true); # Toggle this to true/false to enable/disable caching.
+#    saveToConfig('Cache.Method', 'memcached');
+#    saveToConfig('Cache.Memcached.Store', ['memcached:11211']);
+#
+#    if (c('Cache.Enabled')) {
+#        if (class_exists('Memcached')) {
+#            saveToConfig('Cache.Memcached.Option.'.Memcached::OPT_COMPRESSION, true, false);
+#            saveToConfig('Cache.Memcached.Option.'.Memcached::OPT_DISTRIBUTION, Memcached::DISTRIBUTION_CONSISTENT, false);
+#            saveToConfig('Cache.Memcached.Option.'.Memcached::OPT_LIBKETAMA_COMPATIBLE, true, false);
+#            saveToConfig('Cache.Memcached.Option.'.Memcached::OPT_NO_BLOCK, true, false);
+#            saveToConfig('Cache.Memcached.Option.'.Memcached::OPT_TCP_NODELAY, true, false);
+#            saveToConfig('Cache.Memcached.Option.'.Memcached::OPT_CONNECT_TIMEOUT, 1000, false);
+#            saveToConfig('Cache.Memcached.Option.'.Memcached::OPT_SERVER_FAILURE_LIMIT, 2, false);
+#        } else {
+#            die('PHP is missing the Memcached extension.');
+#        }
+#    }
+    #####
+    memcached:
+        build:
+            context: "./images/memcached"
+        networks:
+            - "vanilla_network"
+        container_name: memcached
+
+volumes:
+    shared:
+    datastorage:
+        # Created by our setup script.
+        external: true
+
+networks:
+    vanilla_network:
+        driver: "bridge"
+        name: "vanilla_network"
+    default:
+        external:
+            name: "vanilla_network"

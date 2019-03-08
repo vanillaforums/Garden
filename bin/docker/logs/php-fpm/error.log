@@ -1,0 +1,32 @@
+[07-Mar-2019 08:43:27] NOTICE: fpm is running, pid 1425
+[07-Mar-2019 08:43:27] NOTICE: ready to handle connections
+[07-Mar-2019 08:50:14] NOTICE: fpm is running, pid 816
+[07-Mar-2019 08:50:14] NOTICE: ready to handle connections
+[07-Mar-2019 08:59:44] NOTICE: fpm is running, pid 816
+[07-Mar-2019 08:59:44] NOTICE: ready to handle connections
+[07-Mar-2019 09:01:17] NOTICE: fpm is running, pid 1425
+[07-Mar-2019 09:01:17] NOTICE: ready to handle connections
+[07-Mar-2019 09:03:51] NOTICE: fpm is running, pid 1425
+[07-Mar-2019 09:03:51] NOTICE: ready to handle connections
+[07-Mar-2019 09:11:10] NOTICE: fpm is running, pid 1425
+[07-Mar-2019 09:11:10] NOTICE: ready to handle connections
+[07-Mar-2019 09:14:08] NOTICE: fpm is running, pid 1426
+[07-Mar-2019 09:14:08] NOTICE: ready to handle connections
+[07-Mar-2019 09:17:48] NOTICE: fpm is running, pid 1425
+[07-Mar-2019 09:17:48] NOTICE: ready to handle connections
+[08-Mar-2019 03:01:39] NOTICE: fpm is running, pid 811
+[08-Mar-2019 03:01:39] NOTICE: ready to handle connections
+[08-Mar-2019 03:07:52] NOTICE: fpm is running, pid 811
+[08-Mar-2019 03:07:52] NOTICE: ready to handle connections
+[08-Mar-2019 03:09:46] NOTICE: fpm is running, pid 811
+[08-Mar-2019 03:09:46] NOTICE: ready to handle connections
+[08-Mar-2019 03:14:39] NOTICE: [pool www] 'user' directive is ignored when FPM is not running as root
+[08-Mar-2019 03:14:39] NOTICE: [pool www] 'group' directive is ignored when FPM is not running as root
+[08-Mar-2019 03:14:39] ERROR: unable to bind listening socket for address '/shared/var/run/php-fpm.sock': Address already in use (98)
+[08-Mar-2019 03:14:39] ERROR: FPM initialization failed
+[08-Mar-2019 03:15:10] NOTICE: [pool www] 'user' directive is ignored when FPM is not running as root
+[08-Mar-2019 03:15:10] NOTICE: [pool www] 'group' directive is ignored when FPM is not running as root
+[08-Mar-2019 03:15:10] ERROR: unable to bind listening socket for address '/shared/var/run/php-fpm.sock': Address already in use (98)
+[08-Mar-2019 03:15:10] ERROR: FPM initialization failed
+[08-Mar-2019 03:18:29] NOTICE: fpm is running, pid 812
+[08-Mar-2019 03:18:29] NOTICE: ready to handle connections
