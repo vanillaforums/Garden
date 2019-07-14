@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# echo "Marking files as owned"
-# chown -R www-data:www-data /srv/vanilla-repositories
-# echo "Done marking files as owned"
+echo "Marking files as owned"
+chown -R www-data:www-data /srv/vanilla-repositories
+echo "Done marking files as owned"
 
 # Configure sendmail
 sendmailConfigured=$(grep 'noreply@dev.vanilla.localhost' /etc/hosts)
