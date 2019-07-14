@@ -19,8 +19,8 @@ services:
             - "FASTCGI_BUFFERS=${VANILLA_DOCKER_FASTCGI_BUFFERS}"
             - "FASTCGI_BUSY_BUFFERS_SIZE=${VANILLA_DOCKER_FASTCGI_BUSY_BUFFERS_SIZE}"
             - "FASTCGI_TEMP_FILE_WRITE_SIZE=${VANILLA_DOCKER_FASTCGI_TEMP_FILE_WRITE_SIZE}"
-        # depends_on:
-        #     - "php-fpm"
+        depends_on:
+            - "php-fpm"
         networks:
             vanilla_network:
                 aliases: # Allows (sso|dev).vanilla.localhost to be resolved internally from php-fpm
