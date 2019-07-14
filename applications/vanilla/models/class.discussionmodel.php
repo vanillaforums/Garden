@@ -118,6 +118,11 @@ class DiscussionModel extends Gdn_Model {
         $this->setMediaForeignTable($this->Name);
         $this->setMediaModel(Gdn::getContainer()->get(MediaModel::class));
         $this->setSessionInterface(Gdn::getContainer()->get("Session"));
+
+        $this->addFilterField([
+            'Sink',
+            'Score',
+        ]);
     }
 
     /**
@@ -1007,6 +1012,7 @@ class DiscussionModel extends Gdn_Model {
         $discussion->Name = htmlspecialchars($discussion->Name);
         $discussion->Attributes = dbdecode($discussion->Attributes);
         $discussion->Url = discussionUrl($discussion);
+        $discussion->CanonicalUrl = $discussion->Attributes['CanonicalUrl'] ?? $discussion->Url;
         $discussion->Tags = $this->formatTags($discussion->Tags);
 
         // Join in the category.
@@ -1107,7 +1113,6 @@ class DiscussionModel extends Gdn_Model {
         }
         $discussion->pinned = $pinned;
         $discussion->pinLocation = $pinLocation;
-
         $this->EventArguments['Discussion'] = &$discussion;
         $this->fireEvent('SetCalculatedFields');
     }
@@ -1147,6 +1152,7 @@ class DiscussionModel extends Gdn_Model {
      * @return object SQL result.
      */
     public function getAnnouncements($wheres = '', $offset = 0, $limit = false) {
+
         $wheres = $this->combineWheres($this->getWheres(), $wheres);
         $session = Gdn::session();
         if ($limit === false) {
@@ -1235,6 +1241,8 @@ class DiscussionModel extends Gdn_Model {
         foreach ($orderBy as $field => $direction) {
             $this->SQL->orderBy($this->addFieldPrefix($field), $direction);
         }
+        $this->EventArguments['Wheres'] = &$wheres;
+        $this->fireEvent('beforeGetAnnouncements');
 
         $data = $this->SQL->get();
 
@@ -1960,9 +1968,7 @@ class DiscussionModel extends Gdn_Model {
         if ($categoryID !== false) {
             $checkPermission = val('CheckPermission', $settings, true);
             $category = CategoryModel::categories($categoryID);
-            if (!$category) {
-                $this->Validation->addValidationResult('CategoryID', "@Category {$categoryID} does not exist.");
-            } elseif ($checkPermission && !CategoryModel::checkPermission($category, 'Vanilla.Discussions.Add')) {
+            if ($category && $checkPermission && !CategoryModel::checkPermission($category, 'Vanilla.Discussions.Add')) {
                 $this->Validation->addValidationResult('CategoryID', 'You do not have permission to post in this category');
             }
         }

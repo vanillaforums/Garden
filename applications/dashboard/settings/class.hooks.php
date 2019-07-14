@@ -58,7 +58,12 @@ class DashboardHooks extends Gdn_Plugin {
 
             ->rule('Gdn_Dispatcher')
             ->addCall('passProperty', ['Menu', new Reference('MenuModule')])
-            ;
+
+            ->rule(\Vanilla\Menu\CounterModel::class)
+            ->addCall('addProvider', [new Reference(ActivityCounterProvider::class)])
+            ->addCall('addProvider', [new Reference(LogCounterProvider::class)])
+            ->addCall('addProvider', [new Reference(RoleCounterProvider::class)])
+        ;
     }
 
     /**
@@ -199,12 +204,6 @@ class DashboardHooks extends Gdn_Plugin {
         if ($embed = c('Garden.Embed.Allow')) {
             // Record the remote url where the forum is being embedded.
             $remoteUrl = c('Garden.Embed.RemoteUrl');
-            if (!$remoteUrl) {
-                $remoteUrl = getIncomingValue('remote');
-                if ($remoteUrl) {
-                    saveToConfig('Garden.Embed.RemoteUrl', $remoteUrl);
-                }
-            }
             if ($remoteUrl) {
                 $sender->addDefinition('RemoteUrl', $remoteUrl);
             }
@@ -346,7 +345,7 @@ class DashboardHooks extends Gdn_Plugin {
             ->addLinkIf('Garden.Settings.Manage', t('Applications'), '/dashboard/settings/applications', 'add-ons.applications', '', $sort)
 
             ->addGroup(t('Technical'), 'site-settings', '', ['after' => 'reputation'])
-            ->addLinkIf('Garden.Settings.Manage', t('Locales'), '/dashboard/settings/locales', 'site-settings.locales', '', $sort)
+            ->addLinkIf('Garden.Settings.Manage', t('Locales'), '/settings/locales', 'site-settings.locales', '', $sort)
             ->addLinkIf('Garden.Settings.Manage', t('Outgoing Email'), '/dashboard/settings/email', 'site-settings.email', '', $sort)
             ->addLinkIf('Garden.Settings.Manage', t('Security'), '/dashboard/settings/security', 'site-settings.security', '', $sort)
             ->addLinkIf('Garden.Settings.Manage', t('Routes'), '/dashboard/routes', 'site-settings.routes', '', $sort)
@@ -909,7 +908,8 @@ class DashboardHooks extends Gdn_Plugin {
         if ($parsed['Type'] !== 'static' || $parsed['Domain'] !== 'v') {
             return;
         }
-
+        // Sanitize $parsed['Name'] to prevent path traversal.
+        $parsed['Name'] = str_replace('..', '', $parsed['Name']);
         $remotePath = PATH_ROOT.'/'.$parsed['Name'];
 
         // Since this is just a temp file we don't want to nest it in a bunch of subfolders.
