@@ -4,11 +4,9 @@ services:
     nginx:
         build:
             context: "./images/nginx"
+        container_name: "nginx"
         # Transform the template into an actual file
         command: /bin/bash -c "envsubst < /etc/nginx/fastcgi.conf.tpl > /etc/nginx/fastcgi.conf && nginx -g 'daemon off;'"
-        container_name: "nginx"
-        depends_on:
-            - "php-fpm"
         environment:
             - "DOLLAR=$$"
             - "FASTCGI_SPLIT_PATH_INFO=${VANILLA_DOCKER_FASTCGI_SPLIT_PATH_INFO}"
@@ -21,6 +19,8 @@ services:
             - "FASTCGI_BUFFERS=${VANILLA_DOCKER_FASTCGI_BUFFERS}"
             - "FASTCGI_BUSY_BUFFERS_SIZE=${VANILLA_DOCKER_FASTCGI_BUSY_BUFFERS_SIZE}"
             - "FASTCGI_TEMP_FILE_WRITE_SIZE=${VANILLA_DOCKER_FASTCGI_TEMP_FILE_WRITE_SIZE}"
+        # depends_on:
+        #     - "php-fpm"
         networks:
             vanilla_network:
                 aliases: # Allows (sso|dev).vanilla.localhost to be resolved internally from php-fpm
@@ -36,7 +36,6 @@ services:
             - "./logs/nginx:/var/log/nginx:delegated"
             - "./certificates:/certificates:cached"
             - "../../../:/srv/vanilla-repositories:cached"
-
     # Don't forget to update docker-compose.unit-test.yml
     php-fpm:
         build:
@@ -54,10 +53,8 @@ services:
         volumes:
             - "shared:/shared" # expose php-fpm socket
             - "./logs/php-fpm:/var/log/php-fpm:delegated"
-            - "./resources/certificates:/usr/local/share/ca-certificates:cached" # Mount extra certificates
-            - "./resources/sphinx:/sphinx:cached" # expose sphinx API. We have to do this here because we need to be enable to update the plugin before we can start the container.
-            - "./resources/usr/local/etc/php/conf.d:/usr/local/etc/php/custom.conf.d:cached"
-            - "../../../:/srv/vanilla-repositories"
+            # - "./resources/sphinx:/sphinx:cached" # expose sphinx API. We have to do this here because we need to be enable to update the plugin before we can start the container.
+            - "../../../:/srv/vanilla-repositories:cached"
         depends_on:
             - "database"
 
@@ -67,13 +64,14 @@ services:
         container_name: "database"
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+            MYSQL_DATABASE: vanilla_dev
         networks:
             - "vanilla_network"
         ports:
             - "3306:3306"
         volumes:
             - "./logs/${VANILLA_DOCKER_DATABASE}:/var/log/mysql"
-            - "./resources/etc/mysql/conf.d/:/etc/mysql/conf.d/"
+            # - "./resources/etc/mysql/conf.d/:/etc/mysql/conf.d/"
             - "datastorage:/var/lib/mysql"
     #####
     ## Runs on the default port 11211
@@ -103,7 +101,7 @@ services:
             context: "./images/memcached"
         networks:
             - "vanilla_network"
-        container_name: memcached
+        container_name: "memcached"
 
 volumes:
     shared:

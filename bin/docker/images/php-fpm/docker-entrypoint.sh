@@ -1,6 +1,8 @@
 #!/bin/bash
 
-chown -R www-data:www-data /srv/vanilla-repositories
+# echo "Marking files as owned"
+# chown -R www-data:www-data /srv/vanilla-repositories
+# echo "Done marking files as owned"
 
 # Configure sendmail
 sendmailConfigured=$(grep 'noreply@dev.vanilla.localhost' /etc/hosts)
@@ -26,10 +28,14 @@ if [ -z "$sendmailConfigured" ]; then
 fi
 
 # Start sendmail
+echo "Starting Sendmail..."
 sendmail -bd
 
+
+echo "Updating CA Certificates"
 # Reload certificates so that everything in /usr/local/share/ca-certificates is loaded.
 update-ca-certificates
 
 # Start php-fpm
+echo "Starting PHP-FPM"
 php-fpm
