@@ -35,7 +35,7 @@ services:
             - "shared:/shared" # allow to use the php-fpm socket
             - "./logs/nginx:/var/log/nginx:delegated"
             - "./certificates:/certificates:cached"
-            - "../../../:/srv/vanilla-repositories:cached"
+            - "../../../:/srv/vanilla-repositories:delegated"
     # Don't forget to update docker-compose.unit-test.yml
     php-fpm:
         build:
@@ -54,7 +54,7 @@ services:
             - "shared:/shared" # expose php-fpm socket
             - "./logs/php-fpm:/var/log/php-fpm:delegated"
             # - "./resources/sphinx:/sphinx:cached" # expose sphinx API. We have to do this here because we need to be enable to update the plugin before we can start the container.
-            - "../../../:/srv/vanilla-repositories:cached"
+            - "../../../:/srv/vanilla-repositories:delegated"
         depends_on:
             - "database"
 
