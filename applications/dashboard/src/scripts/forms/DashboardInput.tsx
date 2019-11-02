@@ -7,8 +7,12 @@ import React from "react";
 import { useFormGroup } from "@dashboard/forms/DashboardFormGroup";
 import classNames from "classnames";
 import { DashboardLabelType } from "@dashboard/forms/DashboardFormLabel";
+import { TextareaAutosize } from "react-autosize-textarea/lib/TextareaAutosize";
+import InputTextBlock from "@library/forms/InputTextBlock";
 
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    multiline?: boolean;
+}
 
 export const DashboardInput: React.FC<IProps> = (props: IProps) => {
     const { inputID, labelType } = useFormGroup();
@@ -18,7 +22,12 @@ export const DashboardInput: React.FC<IProps> = (props: IProps) => {
 
     return (
         <div className={rootClass}>
-            <input type="text" {...props} id={inputID} className={classes} />
+            <InputTextBlock multiLineProps={{ rows: 4 }} inputProps={{ ...props }} margins={false} />
+            {/* {props.multiLine ? (
+                <TextareaAutosize {...restProps} id={inputID} className={classes} />
+            ) : (
+                <input type="text" {...restProps} id={inputID} className={classes} />
+            )} */}
         </div>
     );
 };

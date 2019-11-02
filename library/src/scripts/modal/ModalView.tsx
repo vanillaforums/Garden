@@ -73,10 +73,15 @@ export function ModalView(props: IProps) {
                             isFullScreen: size === ModalSizes.FULL_SCREEN || size === ModalSizes.MODAL_AS_SIDE_PANEL,
                             isSidePanel: size === ModalSizes.MODAL_AS_SIDE_PANEL,
                             isDropDown: size === ModalSizes.MODAL_AS_DROP_DOWN,
+                            isExtraLarge: size === ModalSizes.EXTRA_LARGE,
                             isLarge: size === ModalSizes.LARGE,
                             isMedium: size === ModalSizes.MEDIUM,
                             isSmall: size === ModalSizes.SMALL,
-                            isShadowed: size === ModalSizes.LARGE || ModalSizes.MEDIUM || ModalSizes.SMALL,
+                            isShadowed:
+                                size === ModalSizes.EXTRA_LARGE ||
+                                ModalSizes.LARGE ||
+                                ModalSizes.MEDIUM ||
+                                ModalSizes.SMALL,
                         },
                         props.className,
                     )}

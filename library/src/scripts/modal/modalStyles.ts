@@ -38,6 +38,7 @@ export const modalVariables = useThemeCache(() => {
     });
 
     const sizing = makeThemeVars("sizing", {
+        extraLarge: 1024,
         large: 720,
         medium: 516,
         small: 375,
@@ -176,6 +177,11 @@ export const modalClasses = useThemeCache(() => {
                 borderTopLeftRadius: 0,
                 borderTopRightRadius: 0,
                 border: "none",
+            },
+            "&.isExtraLarge": {
+                width: unit(vars.sizing.extraLarge),
+                height: percent(100),
+                maxWidth: calc(`100% - ${unit(vars.spacing.horizontalMargin * 2)}`),
             },
             "&.isShadowed": {
                 ...shadows.dropDown(),

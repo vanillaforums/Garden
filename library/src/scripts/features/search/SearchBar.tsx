@@ -30,6 +30,7 @@ import { SearchIcon } from "@library/icons/titleBar";
 export interface IComboBoxOption<T = any> {
     value: string | number;
     label: string;
+    content?: React.ReactNode;
     data?: T;
 }
 

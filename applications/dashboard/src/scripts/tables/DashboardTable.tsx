@@ -5,6 +5,7 @@
 
 import React from "react";
 import { DashboardTableHeadItem } from "@dashboard/tables/DashboardTableHeadItem";
+import { DashboardTableCell } from "@dashboard/tables/DashboardTableCell";
 
 interface IProps {
     head: React.ReactNode;
@@ -23,3 +24,4 @@ export function DashboardTable(props: IProps) {
 }
 
 DashboardTable.HeadItem = DashboardTableHeadItem;
+DashboardTable.Cell = DashboardTableCell;

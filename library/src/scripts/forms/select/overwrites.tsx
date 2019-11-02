@@ -68,9 +68,12 @@ export function Menu(props: MenuProps<any>) {
  */
 export function MenuList(props: MenuListComponentProps<any>) {
     const { ...rest } = props;
+
     return (
         <components.MenuList {...rest}>
-            <ul className="suggestedTextInput-menuItems">{props.children}</ul>
+            <ul style={{ padding: 0 }} className="suggestedTextInput-menuItems">
+                {props.children}
+            </ul>
         </components.MenuList>
     );
 }
@@ -149,7 +152,7 @@ export function SelectOption(props: OptionProps<any>) {
                 })}
             >
                 <span className="suggestedTextInput-head">
-                    <span className="suggestedTextInput-title">{props.children}</span>
+                    <span className="suggestedTextInput-title">{props.data.content || props.children}</span>
                 </span>
             </button>
         </li>
@@ -166,6 +169,10 @@ export function ValueContainer(props: ValueContainerProps<any>) {
         <components.ValueContainer
             {...props}
             className={classNames("suggestedTextInput-valueContainer inputBlock-inputText inputText", props.className)}
-        />
+        >
+            {props.selectProps.value && props.selectProps.value.content
+                ? props.selectProps.value.content
+                : props.children}
+        </components.ValueContainer>
     );
 }

@@ -48,6 +48,7 @@ export default class InputBlock extends React.Component<IInputBlockProps, IState
     public static defaultProps = {
         errors: [],
         baseClass: InputTextBlockBaseClass.STANDARD,
+        margins: true,
     };
 
     public constructor(props: IInputBlockProps) {
@@ -90,9 +91,9 @@ export default class InputBlock extends React.Component<IInputBlockProps, IState
                 )}
 
                 <span
-                    className={classNames(classesInputBlock.inputWrap, this.props.wrapClassName, [
-                        classesInputBlock.fieldsetGroup,
-                    ])}
+                    className={classNames(classesInputBlock.inputWrap, this.props.wrapClassName, {
+                        [classesInputBlock.fieldsetGroup]: OuterTag === "fieldset",
+                    })}
                 >
                     {children}
                 </span>
