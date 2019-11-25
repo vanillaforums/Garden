@@ -69,7 +69,7 @@ export const toolTipClasses = useThemeCache(() => {
         transform: translateX("-50%"),
         marginLeft: unit(vars.nub.width),
         pointerEvents: "none",
-        zIndex: 1,
+        zIndex: 1051,
         ...userSelect(),
     });
 
@@ -86,7 +86,7 @@ export const toolTipClasses = useThemeCache(() => {
         }),
         boxShadow: globalVars.overlay.dropShadow,
         background: colorOut(globalVars.mainColors.bg),
-        zIndex: 1,
+        zIndex: 1051,
         $nest: {
             [`&.isUp`]: {
                 transform: `rotate(-45deg)`,
