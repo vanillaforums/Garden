@@ -4,16 +4,16 @@
  */
 
 import { globalVariables } from "@library/styles/globalStyleVars";
-import { componentThemeVariables, useThemeCache } from "@library/styles/styleUtils";
+import { variableFactory, useThemeCache } from "@library/styles/styleUtils";
 import { style } from "typestyle";
 import { debugHelper } from "@library/styles/styleHelpers";
 
 export const searchVariables = useThemeCache(() => {
     const globalVars = globalVariables();
     const elementaryColor = globalVars.elementaryColors;
-    const themeVars = componentThemeVariables("search");
+    const makeThemeVars = variableFactory("search");
 
-    const input = {
+    const input = makeThemeVars("input", {
         border: {
             color: elementaryColor.white,
         },
@@ -21,13 +21,11 @@ export const searchVariables = useThemeCache(() => {
         hover: {
             bg: elementaryColor.black.fade(0.1),
         },
-        ...themeVars.subComponentStyles("input"),
-    };
+    });
 
-    const placeholder = {
+    const placeholder = makeThemeVars("placeholder", {
         color: globalVars.mainColors.fg,
-        ...themeVars.subComponentStyles("placeholder"),
-    };
+    });
 
     return { input, placeholder };
 });

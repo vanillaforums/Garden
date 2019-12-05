@@ -6,25 +6,24 @@
 
 import { globalVariables } from "@library/styles/globalStyleVars";
 import { debugHelper, unit } from "@library/styles/styleHelpers";
-import { componentThemeVariables, useThemeCache } from "@library/styles/styleUtils";
+import { variableFactory, useThemeCache } from "@library/styles/styleUtils";
 import { formElementsVariables } from "@library/forms/formElementStyles";
 import { style } from "typestyle";
 
 export const dayPickerVariables = useThemeCache(() => {
     const globalVars = globalVariables();
     const formElementVars = formElementsVariables();
-    const themeVars = componentThemeVariables("datePicker");
+    const makeThemeVars = variableFactory("datePicker");
 
-    const spacing = {
+    const spacing = makeThemeVars("spacing", {
         padding: 9,
-        ...themeVars.subComponentStyles("spacing"),
-    };
+    });
 
-    const sizing = {
+    const sizing = makeThemeVars("sizing:", {
         height: formElementVars.sizing.height,
-    };
+    });
 
-    const colors = {
+    const colors = makeThemeVars("colors", {
         today: globalVars.mainColors.primary,
         selected: {
             color: globalVars.states.selected.color,
@@ -32,11 +31,11 @@ export const dayPickerVariables = useThemeCache(() => {
         hover: {
             bg: globalVars.states.hover.color,
         },
-    };
+    });
 
-    const border = {
+    const border = makeThemeVars("border", {
         radius: globalVars.border.radius,
-    };
+    });
 
     return { spacing, sizing, colors, border };
 });

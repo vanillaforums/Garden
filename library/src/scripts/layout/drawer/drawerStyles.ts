@@ -6,31 +6,28 @@
 
 import { globalVariables } from "@library/styles/globalStyleVars";
 import { debugHelper, unit } from "@library/styles/styleHelpers";
-import { componentThemeVariables, useThemeCache } from "@library/styles/styleUtils";
+import { variableFactory, useThemeCache } from "@library/styles/styleUtils";
 import { style } from "typestyle";
 import { percent } from "csx";
 
 export const drawerVariables = useThemeCache(() => {
     const globalVars = globalVariables();
-    const themeVars = componentThemeVariables("drawer");
+    const makeThemeVars = variableFactory("drawer");
 
-    const spacing = {
+    const spacing = makeThemeVars("spacing", {
         button: {
             padding: 9,
         },
-        ...themeVars.subComponentStyles("spacing"),
-    };
+    });
 
-    const fonts = {
+    const fonts = makeThemeVars("fonts", {
         size: globalVars.userContent.font.sizes.default,
         weight: globalVars.fonts.weights.semiBold,
-        ...themeVars.subComponentStyles("fonts"),
-    };
+    });
 
-    const sizing = {
+    const sizing = makeThemeVars("sizing", {
         icon: globalVars.userContent.font.sizes.default,
-        ...themeVars.subComponentStyles("sizing"),
-    };
+    });
 
     return { spacing, fonts, sizing };
 });

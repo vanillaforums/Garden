@@ -149,23 +149,3 @@ function normalizeVariables(variables: any) {
 
     return variables;
 }
-
-/**
- * Helper to overwrite styles
- * @param theme - The theme overwrites.
- * @param componentName - The name of the component to overwrite
- *
- * @deprecated
- */
-export const componentThemeVariables = (componentName: string) => {
-    const themeVars = getThemeVariables();
-    const componentVars = (themeVars && themeVars[componentName]) || {};
-
-    const subComponentStyles = (subElementName: string): object => {
-        return (componentVars && componentVars[subElementName]) || {};
-    };
-
-    return {
-        subComponentStyles,
-    };
-};

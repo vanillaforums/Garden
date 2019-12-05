@@ -5,26 +5,25 @@
  */
 
 import { globalVariables } from "@library/styles/globalStyleVars";
-import { colorOut, debugHelper, paddings, unit, userSelect } from "@library/styles/styleHelpers";
-import { componentThemeVariables, styleFactory, useThemeCache } from "@library/styles/styleUtils";
+import { colorOut, paddings, unit, userSelect } from "@library/styles/styleHelpers";
+import { variableFactory, styleFactory, useThemeCache } from "@library/styles/styleUtils";
 import { formElementsVariables } from "@library/forms/formElementStyles";
 import { percent, px } from "csx";
 
 export const tokensVariables = useThemeCache(() => {
     const globalVars = globalVariables();
-    const themeVars = componentThemeVariables("tokens");
+    const makeThemeVars = variableFactory("tokens");
 
-    const token = {
+    const token = makeThemeVars("token", {
         fontSize: globalVars.meta.text.fontSize,
         bg: globalVars.mixBgAndFg(0.1),
         textShadow: `${globalVars.mainColors.bg} 0 0 1px`,
         minHeight: 26,
-    };
+    });
 
-    const clearIcon = {
+    const clearIcon = makeThemeVars("clearIcon", {
         width: 8,
-        ...themeVars.subComponentStyles("clearIcon"),
-    };
+    });
 
     return {
         clearIcon,

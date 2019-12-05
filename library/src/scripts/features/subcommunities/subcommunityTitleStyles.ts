@@ -17,43 +17,39 @@ import {
 import { globalVariables } from "@library/styles/globalStyleVars";
 import { shadowHelper, shadowOrBorderBasedOnLightness } from "@library/styles/shadowHelpers";
 import { TLength } from "typestyle/lib/types";
-import { componentThemeVariables, useThemeCache } from "@library/styles/styleUtils";
+import { variableFactory, useThemeCache } from "@library/styles/styleUtils";
 import { ColorHelper, percent } from "csx";
 import { FontSizeProperty, HeightProperty, MarginProperty, PaddingProperty, WidthProperty } from "csstype";
 import { style } from "typestyle";
 
 export const subcommunityTileVariables = useThemeCache(() => {
     const globalVars = globalVariables();
-    const themeVars = componentThemeVariables("subcommunityTile");
+    const makeThemeVars = variableFactory("subcommunityTile");
 
-    const spacing = {
+    const spacing = makeThemeVars("spacing", {
         default: 24 as PaddingProperty<TLength>,
         color: globalVars.mainColors.primary as ColorHelper,
-        ...themeVars.subComponentStyles("spacing"),
-    };
+    });
 
-    const frame = {
+    const frame = makeThemeVars("frame", {
         height: 90 as PaddingProperty<TLength>,
         width: 90 as PaddingProperty<TLength>,
         bottomMargin: 16 as MarginProperty<TLength>,
-        ...themeVars.subComponentStyles("frame"),
-    };
+    });
 
-    const title = {
+    const title = makeThemeVars("title", {
         fontSize: globalVars.fonts.size.large as FontSizeProperty<TLength>,
         lineHeight: globalVars.lineHeights.condensed,
         marginBottom: 6,
-        ...themeVars.subComponentStyles("title"),
-    };
+    });
 
-    const description = {
+    const description = makeThemeVars("description", {
         fontSize: globalVars.fonts.size.medium as FontSizeProperty<TLength>,
         marginTop: 6,
         lineHeight: globalVars.lineHeights.excerpt,
-        ...themeVars.subComponentStyles("description"),
-    };
+    });
 
-    const link = {
+    const link = makeThemeVars("link", {
         padding: {
             top: 38,
             bottom: 24,
@@ -63,15 +59,13 @@ export const subcommunityTileVariables = useThemeCache(() => {
         fg: globalVars.mainColors.fg,
         bg: globalVars.mainColors.bg,
         minHeight: 280,
-        ...themeVars.subComponentStyles("link"),
-    };
+    });
 
-    const fallBackIcon = {
+    const fallBackIcon = makeThemeVars("fallBackIcon", {
         width: 90 as WidthProperty<TLength>,
         height: 90 as HeightProperty<TLength>,
         fg: globalVars.mainColors.primary,
-        ...themeVars.subComponentStyles("fallBackIcon"),
-    };
+    });
 
     return { spacing, frame, title, description, link, fallBackIcon };
 });

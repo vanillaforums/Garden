@@ -6,28 +6,26 @@
 
 import { globalVariables } from "@library/styles/globalStyleVars";
 import { debugHelper, unit } from "@library/styles/styleHelpers";
-import { componentThemeVariables, styleFactory, useThemeCache } from "@library/styles/styleUtils";
+import { variableFactory, styleFactory, useThemeCache } from "@library/styles/styleUtils";
 import { style } from "typestyle";
 
 export const userDropDownVariables = useThemeCache(() => {
     const globalVars = globalVariables();
-    const themeVars = componentThemeVariables("userDropDown");
+    const makeThemeVars = variableFactory("userDropDown");
 
-    const item = {
+    const item = makeThemeVars("item", {
         topPadding: 6,
         rightPadding: 18,
         bottomPadding: 6,
         leftPadding: 18,
-        ...themeVars.subComponentStyles("item"),
-    };
+    });
 
-    const userCard = {
+    const userCard = makeThemeVars("userCard", {
         topMargin: 24,
         bottomMargin: 24,
-        ...themeVars.subComponentStyles("userCard"),
-    };
+    });
 
-    const userName = {
+    const userName = makeThemeVars("userName", {
         topMargin: 9,
         bottomMargin: 24,
         paddingRight: item.rightPadding,
@@ -35,13 +33,11 @@ export const userDropDownVariables = useThemeCache(() => {
         fontWeight: globalVars.fonts.weights.semiBold,
         fontSize: globalVars.fonts.size.large,
         lineHeight: globalVars.lineHeights.condensed,
-        ...themeVars.subComponentStyles("userName"),
-    };
+    });
 
-    const contents = {
+    const contents = makeThemeVars("contents", {
         width: 300,
-        ...themeVars.subComponentStyles("contents"),
-    };
+    });
 
     return { userCard, userName, contents, item };
 });

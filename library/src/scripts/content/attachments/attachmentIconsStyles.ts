@@ -6,22 +6,20 @@
 
 import { globalVariables } from "@library/styles/globalStyleVars";
 import { margins } from "@library/styles/styleHelpers";
-import { componentThemeVariables, styleFactory, useThemeCache } from "@library/styles/styleUtils";
+import { variableFactory, styleFactory, useThemeCache } from "@library/styles/styleUtils";
 import { calc, px } from "csx";
 
 export const attachmentIconVariables = useThemeCache(() => {
     const globalVars = globalVariables();
-    const themeVars = componentThemeVariables("attachmentIcon");
+    const makeThemeVars = variableFactory("attachmentIcon");
 
-    const spacing = {
+    const spacing = makeThemeVars("spacing", {
         default: 12,
-        ...themeVars.subComponentStyles("spacing"),
-    };
+    });
 
-    const shadow = {
+    const shadow = makeThemeVars("shadow", {
         color: globalVars.mixBgAndFg(0.1),
-        ...themeVars.subComponentStyles("shadow"),
-    };
+    });
 
     const icon = {
         size: 16,

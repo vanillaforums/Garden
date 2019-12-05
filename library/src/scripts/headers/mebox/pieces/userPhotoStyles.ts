@@ -5,7 +5,7 @@
  */
 
 import { debugHelper, objectFitWithFallback, unit } from "@library/styles/styleHelpers";
-import { componentThemeVariables, useThemeCache } from "@library/styles/styleUtils";
+import { variableFactory, useThemeCache } from "@library/styles/styleUtils";
 import { style } from "typestyle";
 
 /**
@@ -14,19 +14,17 @@ import { style } from "typestyle";
  */
 
 export const userPhotoVariables = useThemeCache(() => {
-    const themeVars = componentThemeVariables("userPhoto");
+    const makeThemeVars = variableFactory("userPhoto");
 
-    const border = {
+    const border = makeThemeVars("border", {
         radius: "50%",
-        ...themeVars.subComponentStyles("border"),
-    };
+    });
 
-    const sizing = {
+    const sizing = makeThemeVars("sizing", {
         small: 28,
         medium: 40,
         large: 100,
-        ...themeVars.subComponentStyles("sizing"),
-    };
+    });
 
     return { border, sizing };
 });
