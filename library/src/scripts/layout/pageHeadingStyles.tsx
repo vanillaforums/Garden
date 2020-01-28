@@ -8,6 +8,7 @@ import { em, percent, px } from "csx";
 import { styleFactory, useThemeCache, variableFactory } from "@library/styles/styleUtils";
 import { globalVariables } from "@library/styles/globalStyleVars";
 import { unit } from "@library/styles/styleHelpers";
+import { layoutVariables } from "@library/layout/panelLayoutStyles";
 
 export const pageHeadingVariables = useThemeCache(() => {
     const globalVars = globalVariables();
@@ -67,7 +68,13 @@ export const pageHeadingClasses = useThemeCache(() => {
                 position: "relative",
                 alignSelf: "flex-start",
                 zIndex: 1,
+
+                // Offset to handle the header offsets.
+                marginTop: "-0.35em",
             },
+            layoutVariables()
+                .mediaQueries()
+                .oneColumnDown({ marginTop: "-0.5em" }),
             fontSize
                 ? {
                       top: ".5em",
