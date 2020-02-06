@@ -7,6 +7,8 @@
 
 ## Howdy, Stranger!
 
+_Are you a Vanilla employee? Try working in the Vanilla monorepo over at https://github.com/vanilla/vanilla-mono_
+
 Vanilla was born out of the desire to create flexible, customizable, and downright entertaining
 community solutions. Vanilla has been used to power tens of thousands of community forums around the world
 and we couldn't be happier if you've decided to use Vanilla to grow yours.
