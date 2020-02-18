@@ -236,7 +236,7 @@ window.vanilla.embed = function(host) {
         var result = '';
 
         if (embed_type == 'comments') {
-            result = '//' + host + '/discussion/embed/'
+            result = 'https://' + host + '/discussion/embed/'
             // Break the cache. /embed/ gets cached, looks like you are not logged in.
             + '&c=' + new Date().getTime()
             + '&vanilla_identifier=' + encodeURIComponent(foreign_id)
@@ -324,9 +324,9 @@ window.vanilla.embed = function(host) {
         if (vanilla_lazy_load && typeof jQuery != 'undefined') {
             jQuery.ajax({
                 url: host_base_url + 'js/library/jquery.appear.js',
-                dataType: 'script',
+//                dataType: 'script',
                 cache: true,
-                success: function() {
+                success: function(data, textStatus, jqXHR) {
 //               setTimeout(function() {
 
                     if (jQuery.fn.appear)
