@@ -148,6 +148,9 @@ ${chalk.green(aliases)}`;
                 ...entryModel.aliases,
                 "library-scss": path.resolve(VANILLA_ROOT, "library/src/scss"),
                 "react-select": require.resolve("react-select/dist/react-select.esm.js"),
+                react: "preact/compat",
+                "react-dom/test-utils": "preact/test-utils",
+                "react-dom": "preact/compat",
             },
             extensions: [".ts", ".tsx", ".js", ".jsx"],
             // This needs to be true so that the same copy of a node_module gets shared.

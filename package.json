@@ -38,6 +38,7 @@
         "numeral": "2.0.6",
         "p-debounce": "1.0.0",
         "path-to-regexp": "3.0.0",
+        "preact": "^10.3.2",
         "qs": "6.7.0",
         "react": "^16.9.0",
         "react-aria-live": "2.0.4",
