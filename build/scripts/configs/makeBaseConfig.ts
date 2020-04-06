@@ -15,6 +15,9 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import EntryModel from "../utility/EntryModel";
 import WebpackBar from "webpackbar";
 
+// Patch FS module to prevent EMFILE limit issues on MacOS.
+require("graceful-fs").gracefulify(require("fs"));
+
 /**
  * Create the core webpack config.
  *
