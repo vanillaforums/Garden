@@ -1325,16 +1325,16 @@
         },
         {
             "name": "vanilla/garden-http",
-            "version": "v2.1",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vanilla/garden-http.git",
-                "reference": "4a64bb769d87f6021b024783bfd9c7e31c099e41"
+                "reference": "979731e3a5693739164c4690366377be559deadc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vanilla/garden-http/zipball/4a64bb769d87f6021b024783bfd9c7e31c099e41",
-                "reference": "4a64bb769d87f6021b024783bfd9c7e31c099e41",
+                "url": "https://api.github.com/repos/vanilla/garden-http/zipball/979731e3a5693739164c4690366377be559deadc",
+                "reference": "979731e3a5693739164c4690366377be559deadc",
                 "shasum": ""
             },
             "require": {
@@ -1362,7 +1362,7 @@
                 }
             ],
             "description": "An unbloated HTTP client library for building RESTful API clients.",
-            "time": "2019-08-18T02:08:03+00:00"
+            "time": "2020-04-24T20:43:18+00:00"
         },
         {
             "name": "vanilla/garden-password",
@@ -3742,8 +3742,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
@@ -3950,5 +3950,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.2"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
