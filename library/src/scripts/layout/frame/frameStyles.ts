@@ -7,7 +7,9 @@
 import { globalVariables } from "@library/styles/globalStyleVars";
 import { colorOut, unit } from "@library/styles/styleHelpers";
 import { styleFactory, useThemeCache, variableFactory } from "@library/styles/styleUtils";
-import { percent } from "csx";
+import { calc, percent, viewHeight } from "csx";
+import { titleBarVariables } from "@library/headers/vanillaHeaderStyles";
+import { useScrollOffset } from "@library/layout/ScrollOffsetContext";
 
 export const frameVariables = useThemeCache(() => {
     const globalVars = globalVariables();
@@ -62,11 +64,13 @@ export const frameClasses = useThemeCache(() => {
         zIndex: 2,
         willChange: "height",
     });
+
     const bodyWrap = style("bodyWrap", {
         position: "relative",
         background: colorOut(vars.colors.bg),
         width: percent(100),
     });
+
     const footerWrap = style("footerWrap", {
         background: colorOut(vars.colors.bg),
         zIndex: 2,

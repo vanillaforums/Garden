@@ -323,6 +323,11 @@ export const titleBarVariables = useThemeCache((forcedVars?: IThemeVariables) =>
         };
     };
 
+    // // When using some of these vraibles, it's possible the header is bigger than the specified sizing.height
+    // const calculatedHeight = () => {
+    //     return 0;
+    // };
+
     return {
         fullBleed,
         border,
