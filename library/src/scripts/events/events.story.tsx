@@ -1,4 +1,5 @@
 /**
+ * @author Stéphane LaFlèche <stephane.l@vanillaforums.com>
  * @copyright 2009-2019 Vanilla Forums Inc.
  * @license GPL-2.0-only
  */
@@ -6,7 +7,6 @@
 import React from "react";
 import { StoryHeading } from "@library/storybook/StoryHeading";
 import { storyWithConfig } from "@library/storybook/StoryContext";
-import { unit } from "@library/styles/styleHelpers";
 import { EventsList } from "@library/events/EventsList";
 import { IEvent } from "@library/events/Event";
 import { EventAttendance } from "@library/events/EventAttendanceDropDown";
