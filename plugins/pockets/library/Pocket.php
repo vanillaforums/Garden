@@ -70,6 +70,9 @@ class Pocket {
     /** @var array */
     public $Attributes = [];
 
+    /** @var array */
+    public $Subcommunities = [];
+
     /**
      * Pocket constructor.
      *
@@ -169,9 +172,46 @@ class Pocket {
             }
         }
 
+<<<<<<< HEAD
         /** @var \Garden\EventManager $eventManager */
         $eventManager = Gdn::getContainer()->get(\Garden\EventManager::class);
         $eventManager->fire('settingsController_AdditionalPocketFilters', ["testMode" => $testMode, "pocketAdmin" => $pocketAdmin]);
+=======
+
+        // Check Subcommunities
+        if ($this->hasSubcommunities()) {
+            if (!c("Feature.SubcommunityProducts.Enabled")) { // If no subcommunities currently exist, but ids were saved, don't render
+                return false;
+            }
+            $subcommunitiesModel = Gdn::getContainer()->get(SubcommunityModel::class);
+            $currentSubcommunity = $subcommunitiesModel::getCurrent();
+            if (!$currentSubcommunity) {
+                return false;
+            }
+            $currentSubcommunityID = $currentSubcommunity["SubcommunityID"];
+            $match = false;
+            foreach ($this->Subcommunities as $subComID) {
+                if ($subComID === $currentSubcommunityID) {
+                    $match = true;
+                    break;
+                }
+            }
+            if ($match === false) {
+                return false;
+            }
+        }
+
+        // Check roles
+        if ($this->hasRoles() && !($testMode && $pocketAdmin)) {
+            $roleModel = Gdn::getContainer()->get(RoleModel::class);
+            $userID = Gdn::session()->UserID;
+            $userRoles = $roleModel->getByUserID($userID)->datasetType(DATASET_TYPE_ARRAY);
+            $intersections = array_intersect(array_keys((array)$userRoles), $this->Roles);
+            if (count($intersections) === 0) {
+                return false;
+            }
+        }
+>>>>>>> feature/pockets-by-subcommunity
 
         // If we've passed all of the tests then the pocket can be processed.
         return true;
@@ -195,7 +235,12 @@ class Pocket {
         $this->EmbeddedNever = $data['EmbeddedNever'] ?? null;
         $this->ShowInDashboard = $data['ShowInDashboard'] ?? $data;
         $this->TestMode = $data['TestMode'] ?? null;
+<<<<<<< HEAD
         $this->Attributes = $data['Attributes'] ?? null;
+=======
+        $this->Roles = $data['Roles'] ? json_decode($data['Roles']) : null;
+        $this->Subcommunities = $data['Subcommunities'] ? json_decode($data['Subcommunities']) : null;
+>>>>>>> feature/pockets-by-subcommunity
 
         // parse the frequency.
         $repeat = $data['Repeat'];
@@ -212,6 +257,27 @@ class Pocket {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Determine whether the pocket is dependent on role conditions
+     *
+     * @return bool
+     */
+    public function hasRoles() {
+        return !empty($this->Roles);
+    }
+
+    /**
+     * Determine whether the pocket is dependent on subcommunity conditions
+     *
+     * @return bool
+     */
+    public function hasSubcommunities() {
+        return !empty($this->Subcommunities);
+    }
+
+    /**
+>>>>>>> feature/pockets-by-subcommunity
      * Attempt to determine the name of the page from the passed object.
      *
      * - Checks `PageName`.
@@ -342,7 +408,12 @@ class Pocket {
                 'EmbeddedNever' => 0,
                 'ShowInDashboard' => 0,
                 'Type' => 'default',
+<<<<<<< HEAD
                 'Attributes' => null
+=======
+                'Roles' => null,
+                'Subcommunities' => null,
+>>>>>>> feature/pockets-by-subcommunity
                 ];
             $model->save($pocket);
         }
