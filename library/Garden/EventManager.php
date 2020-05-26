@@ -272,11 +272,6 @@ class EventManager implements EventDispatcherInterface, ListenerProviderInterfac
             return [];
         }
 
-        // Do some backwards compatible kludges here.
-//        if (count($args) === 1 && is_object($args[0]) && property_exists($args[0], 'EventArguments')) {
-//            $args[] = $args[0]->EventArguments;
-//        }
-
         $result = [];
         foreach ($handlers as $callback) {
             $result[] = call_user_func_array($callback, $args);

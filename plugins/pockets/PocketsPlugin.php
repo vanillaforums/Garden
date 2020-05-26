@@ -322,8 +322,8 @@ class PocketsPlugin extends Gdn_Plugin {
         $sender->Form = $form;
 
         if ($form->authenticatedPostBack()) {
-//            $unflattened = unflattenArray('.', $form->formValues());
-//            $form->formValues($unflattened);
+            $unflattened = unflattenArray('.', $form->formValues());
+            $form->formValues($unflattened);
             // Save the pocket.
             if ($pocketID !== false) {
                 $form->setFormValue('PocketID', $pocketID);
@@ -372,25 +372,12 @@ class PocketsPlugin extends Gdn_Plugin {
                 // The 'TestMode' property will already be set to true in the UI, we'll let save() set it.
             }
 
-<<<<<<< HEAD
+
             $enabled = $form->getFormValue('Enabled');
             $form->setFormValue('Disabled', $enabled === "1" ? Pocket::ENABLED : Pocket::DISABLED);
 
             $form->setFormValue('Attributes', json_encode($unflattened['Attributes'], true));
 
-=======
-            // Roles
-            $roles = $form->getFormValue('Roles');
-            $form->setFormValue('Roles', $roles);
-
-            // Subcommunities
-            $subcommunities = $form->getFormValue('Subcommunities');
-            $form->setFormValue('Subcommunities', $subcommunities);
-
-            $enabled = $form->getFormValue('Enabled');
-            $form->setFormValue('Disabled', $enabled === "1" ? Pocket::ENABLED : Pocket::DISABLED);
-
->>>>>>> feature/pockets-by-subcommunity
             $saved = $form->save();
             if ($saved) {
                 $sender->StatusMessage = t('Your changes have been saved.');
@@ -705,11 +692,6 @@ class PocketsPlugin extends Gdn_Plugin {
             ->column('ShowInDashboard', 'tinyint', '0')
             ->column('TestMode', 'tinyint', '0')
             ->column('Type', [Pocket::TYPE_DEFAULT, Pocket::TYPE_AD], Pocket::TYPE_DEFAULT)
-<<<<<<< HEAD
-=======
-            ->column('Roles', "varchar(225)", null)
-            ->column('Subcommunities', "varchar(225)", null)
->>>>>>> feature/pockets-by-subcommunity
             ->set();
 
         $PermissionModel = Gdn::permissionModel();
@@ -784,16 +766,19 @@ class PocketsPlugin extends Gdn_Plugin {
     }
 
     /**
+     * Add fields to addedit form
      * @param \SettingsController $sender
      * @param array $args
      */
     function settingsController_AdditionalPocketFilterInputs_handler ($args) {
         $Form = $args['form'];
+        $attributes = $args["attributes"];
         echo $Form->react(
             "RoleIDs",
             "pocket-multi-role-input",
             [
                 "tag" => "li",
+                "value" => $Form->getValue("RoleIDs") ?? []
             ]
         );
     }

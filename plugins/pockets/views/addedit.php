@@ -55,33 +55,32 @@ echo $Form->errors();
         </div>
     </li>
 
-<<<<<<< HEAD
     <?php
     /** @var \Garden\EventManager $eventManager */
     $eventManager = Gdn::getContainer()->get(\Garden\EventManager::class);
     $eventManager->fire('settingsController_AdditionalPocketFilterInputs', ['form' => $Form, 'attributes' => json_decode($Form->getFormValue("Attributes", '[]'))]);
-=======
-    <?php echo $Form->react(
-        "Roles", "pocket-multi-role-input",
-        [
-            "tag" => "li",
-            "value" => $Form->getValue("Roles") ?? ""
-        ]
-    );
-    ?>
 
-    <?php
-    // Is this good enough?
-    if (c("Feature.SubcommunityProducts.Enabled")) {
-        echo $Form->react(
-            "Subcommunities", "pocket-subcommunities-chooser",
-            [
-                "tag" => "li",
-                "value" => $Form->getValue("Subcommunities") ?? ""
-            ]
-        );
-    }
->>>>>>> feature/pockets-by-subcommunity
+//    <?php echo $Form->react(
+//        "Roles", "pocket-multi-role-input",
+//        [
+//            "tag" => "li",
+//            "value" => $Form->getValue("Roles") ?? ""
+//        ]
+//    );
+//    ?>
+
+<!--    --><?php
+//    // Is this good enough?
+//    if (c("Feature.SubcommunityProducts.Enabled")) {
+//        echo $Form->react(
+//            "Subcommunities", "pocket-subcommunities-chooser",
+//            [
+//                "tag" => "li",
+//                "value" => $Form->getValue("Subcommunities") ?? ""
+//            ]
+//        );
+//    }
+
     ?>
 
     <li class="js-repeat form-group">
@@ -122,8 +121,6 @@ echo $Form->errors();
         </div>
     </li>
 
-
-
     <li class="form-group">
         <?php
             echo $Form->labelWrap('Conditions', ''); ?>
@@ -138,11 +135,6 @@ echo $Form->errors();
         </div>
     </li>
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> feature/pockets-by-subcommunity
     <li class="form-group">
         <div class="label-wrap-wide">
             <?php echo $Form->label('Test Mode', 'Testing'); ?>
