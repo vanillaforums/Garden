@@ -35,4 +35,28 @@ class LegacyTwigViewHandler implements LegacyViewHandlerInterface {
         // uses only ob_start and ob_get_clean to gather the rendered result.
         echo $this->renderTwig($path, $data);
     }
+
+    /**
+     * Register functions to twig
+     *
+     * @param string $name
+     * @param callable $callable
+     * @param bool $isEcho
+     */
+    public static function registerFunction(string $name, callable $callable, bool $isEcho = false) {
+        /** @var LegacyTwigViewHandler $viewHandler */
+        $viewHandler = \Gdn::getContainer()->get(LegacyTwigViewHandler::class);
+        $newCallable = function () use ($callable, $isEcho) {
+            if ($isEcho) {
+                ob_start();
+            }
+            $output = $callable();
+            if ($isEcho) {
+                $output = ob_get_contents();
+                ob_end_clean();
+            }
+            return new \Twig\Markup($output, 'utf-8');
+        };
+        $viewHandler->twig->addFunction(new \Twig\TwigFunction($name, $newCallable));
+    }
 }
