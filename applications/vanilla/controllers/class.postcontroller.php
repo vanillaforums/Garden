@@ -540,7 +540,7 @@ class PostController extends VanillaController {
 
                 $Description = val('Description', $PageInfo, '');
                 $Images = val('Images', $PageInfo, []);
-                $LinkText = t('EmbededDiscussionLinkText', 'Read the full story here');
+                $LinkText = t('EmbeddedDiscussionLinkText', 'Read the full story here');
 
                 if (!$Description && count($Images) == 0) {
                     $Body = formatString(
@@ -750,7 +750,7 @@ class PostController extends VanillaController {
                     $Set = ['Name' => $this->Form->getFormValue('Name')];
 
                     if (isset($vanilla_url) && $vanilla_url && strpos(val('Body', $Discussion), t('Undefined discussion subject.')) !== false) {
-                        $LinkText = t('EmbededDiscussionLinkText', 'Read the full story here');
+                        $LinkText = t('EmbeddedDiscussionLinkText', 'Read the full story here');
                         $Set['Body'] = formatString(
                             '<p><a href="{Url}">{LinkText}</a></p>',
                             ['Url' => $vanilla_url, 'LinkText' => $LinkText]
