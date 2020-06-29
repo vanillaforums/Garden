@@ -258,10 +258,12 @@ function useQuoteButtonHandler() {
             const url = triggeringElement.getAttribute("data-scrape-url") || "";
             embedInserter.scrapeMedia(url);
 
-            // Just in case the browser doesn't support this API.
-            if (quill.root.scrollIntoView) {
-                quill.root.scrollIntoView({ behavior: "smooth" });
-            }
+            // Add a small delay, then scroll to the editor.
+            setTimeout(() => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const boundingRect = quill.root.getBoundingClientRect();
+                window.scrollTo({ top: scrollTop + boundingRect.top, behavior: "smooth" });
+            }, 20);
         };
         const delegatedHandler = delegateEvent("click", ".js-quoteButton", handleQuoteButtonClick)!;
         return () => {

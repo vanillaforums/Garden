@@ -70,6 +70,8 @@ export function CollapsableContent(props: IProps) {
         }
     }, [domNodesToAttach]); // eslint-ignore-line
 
+    // Sometimes the inner content can be scolled in a certain browser.
+    // We always want it ot be at the top of it's scroll position.
     useLayoutEffect(() => {
         nextTick(() => {
             scrollRef.current!.scrollTo({ top: 0 });
