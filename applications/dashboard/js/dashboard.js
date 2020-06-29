@@ -1144,7 +1144,7 @@ $(document).on('contentLoad', function(e) {
         modalInit(); // modals (aka popups)
         clipboardInit(); // copy elements to the clipboard
         drawerInit(e.target); // responsive hamburger menu nav
-        icheckInit(e.target); // checkboxes and radios
+        //icheckInit(e.target); // checkboxes and radios
         expanderInit(e.target); // truncates text and adds link to expand
         responsiveTablesInit(e.target); // makes tables responsive
         foggyInit(e.target); // makes settings blurred out
