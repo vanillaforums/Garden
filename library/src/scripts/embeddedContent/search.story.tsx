@@ -1,4 +1,5 @@
 /**
+ * @author Stéphane LaFlèche <stephane.l@vanillaforums.com>
  * @copyright 2009-2019 Vanilla Forums Inc.
  * @license GPL-2.0-only
  */
@@ -6,6 +7,7 @@
 import { StoryHeading } from "@library/storybook/StoryHeading";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+import { StoryContent } from "@library/storybook/StoryContent";
 import { ButtonTypes } from "@library/forms/buttonTypes";
 import IndependentSearch from "@library/features/search/IndependentSearch";
 import SearchContext from "@library/contexts/SearchContext";
@@ -29,23 +31,23 @@ import {
     TypeQuestionIcon,
 } from "@library/icons/searchIcons";
 import { t } from "@vanilla/i18n/src";
-import { StoryContent } from "@library/storybook/StoryContent";
-import { useLayout } from "@library/layout/LayoutContext";
 
 const story = storiesOf("Search", module);
 
-const dummyUserFragment = {
-    userID: 1,
-    name: "Joe",
-    photoUrl: "",
-    dateLastActive: "2016-07-25 17:51:15",
-};
+story.add("Search Components", () => {
+    const dummyUserFragment = {
+        userID: 1,
+        name: "Joe",
+        photoUrl: "",
+        dateLastActive: "2016-07-25 17:51:15",
+    };
 
-story.add("Search Box", () => {
-    const classesSearch = bannerClasses(useLayout().mediaQueries);
+    const classesSearch = bannerClasses();
     return (
         <StoryContent>
-            <StoryHeading depth={1}>Search Box</StoryHeading>
+            <StoryHeading depth={1}>Search Elements</StoryHeading>
+
+            <StoryHeading>Search Box</StoryHeading>
             <SearchContext.Provider value={{ searchOptionProvider: new MockSearchData() }}>
                 <MemoryRouter>
                     <div
@@ -72,14 +74,8 @@ story.add("Search Box", () => {
                     </div>
                 </MemoryRouter>
             </SearchContext.Provider>
-        </StoryContent>
-    );
-});
 
-story.add("Search Results", () => {
-    return (
-        <StoryContent>
-            <StoryHeading depth={1}>Search Results</StoryHeading>
+            <StoryHeading>Search Results</StoryHeading>
             <ResultList
                 results={[
                     {
@@ -226,22 +222,6 @@ story.add("Search Results", () => {
                             />
                         ),
                         icon: <TypeAllIcon />,
-                    },
-                    {
-                        name: "Example search result - no icon",
-                        headingLevel: 3,
-                        url: "#",
-                        excerpt:
-                            "Donut danish halvah macaroon chocolate topping. Sugar plum cookie chupa chups tootsie roll tiramisu cupcake carrot cake. Ice cream biscuit sesame snaps fruitcake.",
-                        meta: (
-                            <ResultMeta
-                                dateUpdated={"2016-07-25 17:51:15"}
-                                updateUser={dummyUserFragment}
-                                crumbs={[{ name: "This" }, { name: "is" }, { name: "the" }, { name: "breadcrumb" }]}
-                                status={PublishStatus.PUBLISHED}
-                                type={"Article"}
-                            />
-                        ),
                     },
                 ]}
             />

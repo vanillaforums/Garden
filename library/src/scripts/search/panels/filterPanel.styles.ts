@@ -6,11 +6,12 @@
 import { useThemeCache, styleFactory } from "@library/styles/styleUtils";
 import { fonts, paddings, srOnly, unit } from "@library/styles/styleHelpers";
 import { globalVariables } from "@library/styles/globalStyleVars";
-import { LayoutTypes } from "@library/layout/types/interface.layoutTypes";
+import { twoColumnLayoutVariables } from "@library/layout/twoColumnLayoutStyles";
 
-export const filterPanelClasses = useThemeCache(mediaQueries => {
+export const filterPanelClasses = useThemeCache(() => {
     const globalVars = globalVariables();
     const style = styleFactory("filterPanel");
+    const mediaQueries = twoColumnLayoutVariables().mediaQueries();
 
     const header = style(
         "header",
@@ -26,12 +27,8 @@ export const filterPanelClasses = useThemeCache(mediaQueries => {
                 },
             },
         },
-        mediaQueries({
-            [LayoutTypes.TWO_COLUMNS]: {
-                oneColumnDown: {
-                    ...srOnly(),
-                },
-            },
+        mediaQueries.oneColumnDown({
+            ...srOnly(),
         }),
     );
 
