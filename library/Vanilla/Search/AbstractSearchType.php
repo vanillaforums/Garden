@@ -40,6 +40,15 @@ abstract class AbstractSearchType {
     abstract public function getType(): string;
 
     /**
+     * Get search engine index
+     *
+     * @return string
+     */
+    public function getIndex(): string {
+        return $this->getSearchGroup();
+    }
+
+    /**
      * Get records data by their IDs
      *
      * @param array $recordIDs
@@ -114,7 +123,7 @@ abstract class AbstractSearchType {
             'expandBody:b?' => [
                 'default' => true,
             ],
-            'expand?' => ApiUtils::getExpandDefinition(['insertUser', 'breadcrumbs']),
+            'expand?' => ApiUtils::getExpandDefinition(['insertUser', 'breadcrumbs', 'image', 'excerpt']),
         ]));
     }
 
