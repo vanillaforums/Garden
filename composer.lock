@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fcae90364aaf401b9b9ec6d4c62f0935",
+    "content-hash": "bbb8eb2cfad9212a90a76f9c1b561e63",
     "packages": [
         {
             "name": "chrisjean/php-ico",
@@ -78,6 +78,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -549,6 +550,36 @@
                 "php"
             ],
             "time": "2016-01-14T20:55:00+00:00"
+        },
+        {
+            "name": "vanilla/cloud-interops",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vanilla/cloud-interops.git",
+                "reference": "370b91568c8628dfb33dcf9f9687f3664d718206"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vanilla/cloud-interops/zipball/370b91568c8628dfb33dcf9f9687f3664d718206",
+                "reference": "370b91568c8628dfb33dcf9f9687f3664d718206",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Vanilla\\CloudInterops\\": "Vanilla/CloudInterops"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "description": "Provides Vanilla Cloud contracts",
+            "time": "2020-08-17T21:51:54+00:00"
         },
         {
             "name": "vanilla/garden-container",
@@ -1554,6 +1585,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2017-11-27T05:48:46+00:00"
         },
         {
@@ -1697,6 +1729,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-01-06T05:45:45+00:00"
         },
         {
@@ -2351,7 +2384,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "vanilla/cloud-interops": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -2360,5 +2395,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.0.26"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }

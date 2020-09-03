@@ -45,13 +45,11 @@
         "vanilla/htmlawed": "~2.0",
         "vanilla/legacy-oauth": "~1.0",
         "vanilla/legacy-passwords": "~1.0",
-        "vanilla/nbbc": "~2.1"
+        "vanilla/nbbc": "~2.1",
+        "vanilla/cloud-interops": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0"
-    },
-    "provide": {
-        "ext-gd": "*"
     },
     "autoload": {
         "classmap": [
